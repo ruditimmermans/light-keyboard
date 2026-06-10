@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * Keyboard height picker. Allows choosing a scaling factor from 60% to 100%.
+ * Keyboard height picker. Allows choosing a scaling factor from 50% to 100%.
  */
 class KeyboardHeightActivity : AppCompatActivity() {
 
@@ -39,7 +39,7 @@ class KeyboardHeightActivity : AppCompatActivity() {
         )
         root.addView(label(getString(R.string.setup_height), 28f, R.color.white))
 
-        val heights = listOf(60, 70, 80, 90, 100)
+        val heights = listOf(50, 60, 70, 80, 90, 100)
         for (h in heights) {
             option(root, pad, h, "$h%")
         }

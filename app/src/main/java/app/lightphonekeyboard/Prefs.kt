@@ -65,7 +65,7 @@ object Prefs {
     fun setKeyLayout(c: Context, value: String) =
         prefs(c).edit().putString(KEY_LAYOUT, value).apply()
 
-    /** Keyboard height percentage (60-100). Default is 100. */
+    /** Keyboard height percentage (50-100). Default is 100. */
     fun heightPercent(c: Context): Int = prefs(c).getInt(KEY_HEIGHT, 100)
 
     fun setHeightPercent(c: Context, value: Int) =
