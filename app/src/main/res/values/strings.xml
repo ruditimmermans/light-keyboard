@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Light Keyboard</string>
+    <string name="setup_title">Light Keyboard</string>
+    <string name="setup_blurb">A minimal black-and-white keyboard.</string>
+    <string name="setup_step1">1. Enable Light Keyboard</string>
+    <string name="setup_step2">2. Choose it as your keyboard</string>
+    <string name="setup_autocorrect">Autocorrect</string>
+    <string name="setup_autocap">Auto-Capitalize</string>
+    <string name="setup_autoperiod">Auto-Period</string>
+    <string name="setup_layout">Keyboard layout</string>
+    <string name="setup_height">Keyboard height</string>
+    <string name="setup_returnkey">Return key</string>
+    <string name="setup_emojikey">Emoji keyboard</string>
+    <string name="layout_title">Keyboard layout</string>
+    <string name="layout_back">← Back</string>
+    <string name="setup_voice">Voice dictation</string>
+    <string name="setup_voice_dl">(40MB download)</string>
+    <string name="setup_voice_clear">Delete model</string>
+    <string name="setup_voice_loading">Downloading voice model…</string>
+    <string name="setup_voice_error">Download failed: %1$s</string>
+    <string name="kb_listening_done">Tap when done</string>
+    <string name="kb_voice_unavailable">Voice unavailable</string>
+    <string name="kb_voice_preparing">Preparing voice…</string>
+    <string name="kb_listening">Listening…</string>
+    <string name="kb_voice_loading">Loading voice…</string>
+    <string name="kb_voice_not_downloaded">Voice not downloaded</string>
+    <string name="kb_voice_error">Voice error.</string>
+</resources>

@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'app.lightphonekeyboard'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'app.lightphonekeyboard'
+        minSdk 26
+        targetSdk 35
+        // CI derives these from the pushed Git tag (see .github/workflows/release.yml) so the APK's
+        // embedded versionName always equals the GitHub release tag. Otherwise Obtainium compares the
+        // tag against the stale embedded version and shows a phantom "update available" forever —
+        // every v0.1.x release shipped embedded as 0.1.0, which is exactly that bug. The literals
+        // below are only the fallback for local/debug builds, which have no tag.
+        versionCode ((project.findProperty('appVersionCode') ?: '1').toString().toInteger())
+        versionName (project.findProperty('appVersionName') ?: '0.1.0')
+        resourceConfigurations += ['en', 'nl']
+
+        // Light Phone 3 is arm64 — ship only its native libs (Vosk .so) to keep the APK small.
+        ndk { abiFilters 'arm64-v8a' }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions { jvmTarget = '17' }
+
+    // Release signing is supplied via env vars (set in CI from repo secrets). When they're absent
+    // — e.g. local builds — the config stays empty and release APKs are simply unsigned; debug
+    // builds are what development uses, so no keystore is needed to work on the app.
+    signingConfigs {
+        release {
+            def storePath = System.getenv('KEYSTORE_FILE')
+            if (storePath) {
+                storeFile file(storePath)
+                storePassword System.getenv('KEYSTORE_PASSWORD')
+                keyAlias System.getenv('KEY_ALIAS')
+                keyPassword System.getenv('KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        debug { applicationIdSuffix '.debug' }
+        release {
+            signingConfig System.getenv('KEYSTORE_FILE') ? signingConfigs.release : null
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    lint { abortOnError false }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    // Offline on-device speech recognition. The native libs ship in the APK (~10MB); the language
+    // model is NOT bundled — it's downloaded on demand when the user turns on voice dictation.
+    implementation 'com.alphacephei:vosk-android:0.3.47'
+
+    testImplementation 'junit:junit:4.13.2'   // JVM unit tests for the pure TouchModel logic
+}
